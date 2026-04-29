@@ -1,0 +1,61 @@
+{
+  "name": "@zdottedline/verify",
+  "version": "1.0.0",
+  "description": "Independent, vendor-neutral verification CLI for ZDottedLine signed documents. Verifies hash chain, Polygon anchor, and Bitcoin (OpenTimestamps) anchor without depending on ZDottedLine infrastructure.",
+  "license": "MIT",
+  "author": "ZDottedLine, Inc.",
+  "homepage": "https://github.com/zdottedline/zdl-verify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zdottedline/zdl-verify.git"
+  },
+  "bugs": "https://github.com/zdottedline/zdl-verify/issues",
+  "keywords": [
+    "esignature",
+    "blockchain",
+    "opentimestamps",
+    "polygon",
+    "bitcoin",
+    "verification",
+    "audit",
+    "cryptographic-proof",
+    "tamper-proof",
+    "zdottedline"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "zdl": "./dist/cli.js",
+    "zdl-verify": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "SPEC.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --import tsx test/*.test.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
