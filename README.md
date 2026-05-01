@@ -159,6 +159,10 @@ We're trying to build the version where you don't have to trust us. The `.ots` p
 
 If you find a way to break that promise, [please open an issue](https://github.com/zdottedline/zdl-verify/issues). We mean it.
 
+## Historical data disclosure
+
+A defect in a prior version of the server-side `recordDocumentEvent` function caused hash-chain linkages to be miscomputed for events recorded before **2026-04-28 18:14:25 UTC**. Documents signed before that time may report `[FAIL] hash-chain` when verified with this CLI — that is *expected behavior given the historical defect*. The Polygon and Bitcoin anchors over those documents remain independently valid; only the chain's internal linkage is affected. Scope of impact: **1 production document**. Full disclosure including the rationale for not retroactively repairing the chain (immutability is the point) is in [`SPEC.md` §8](./SPEC.md#8-historical-data-disclosure-events-recorded-before-2026-04-28-1814-utc).
+
 ## Audit trail / contributing
 
 This is a small codebase by design. Read it. Audit it. Fork it. PR it.

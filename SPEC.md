@@ -277,4 +277,22 @@ Known limitations of v1.0:
 
 ---
 
+## 8. Historical Data Disclosure (events recorded before 2026-04-28 18:14 UTC)
+
+ZDottedLine, Inc. is committed to honest disclosure of any defect that affects the verifiability of signed documents. One such defect existed in a prior version of the server-side `recordDocumentEvent` function and was fixed and deployed to production at **2026-04-28 18:14:25 UTC**.
+
+**The defect.** When a new event was appended to a document's hash chain, the server's lookup of the prior event used ascending-by-`created_at` ordering rather than descending. As a result, every event after the first incorrectly referenced the *genesis* event (event 0) as its `previousHash` instead of the immediately preceding event. The chain links were not a proper linked list.
+
+**The detection.** This CLI walks the chain independently and surfaces the defect as `[FAIL] hash-chain — chain broken at event #N of M`. That is the correct behavior. The failure is real: those documents' chains are not internally consistent in the way the v1.0 spec defines.
+
+**Why it cannot be retroactively repaired.** The hash chain is intentionally append-only and immutable — that immutability is what makes the audit trail evidentially useful. Mutating prior records to "fix" the linkage would itself constitute tampering and would invalidate every downstream proof. We refuse to do this.
+
+**Scope of impact in production.** As of 2026-05-01: 1 production document (signed 2026-04-23) is affected. All documents whose multi-event activity occurred entirely after 2026-04-28 18:14:25 UTC are clean.
+
+**What this means for verifiers.** If you receive a document signed before 2026-04-28 18:14:25 UTC and `zdl verify` reports a broken chain, that is *expected behavior given the historical defect*. The Polygon and Bitcoin (OTS) anchors for those documents — when present — remain independently valid as cryptographic timestamps: they commit to the state of the hash chain as it existed at signing time, and that state is what the chain itself claims. The chain's *internal linkage* is what's broken, not the cryptographic anchors over it.
+
+**Reporting future defects.** Any future defect that affects verifiability will be disclosed here in a similar dated block, with the precise UTC time of the deployed fix and a count of impacted production documents. Silent fixes are not acceptable for a verification protocol.
+
+---
+
 *ZDottedLine, Inc. — 2026.*
