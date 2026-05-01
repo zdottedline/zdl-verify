@@ -1,6 +1,6 @@
 {
   "name": "@zdottedline/verify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Independent, vendor-neutral verification CLI for ZDottedLine signed documents. Verifies hash chain, Polygon anchor, and Bitcoin (OpenTimestamps) anchor without depending on ZDottedLine infrastructure.",
   "license": "MIT",
   "author": "ZDottedLine, Inc.",
